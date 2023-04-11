@@ -6,15 +6,24 @@ public class GameManager : MonoBehaviour
     private float _gameTimer = 30;
 
     public TextMeshProUGUI timeUI;
-    // Start is called before the first frame update
-    void Start()
+
+    public static GameManager Instance;
+
+    protected virtual void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
+
+       
+    private void Start()
     {
         _gameTimer = 30;
         UpdateUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
         GameTime();
         UpdateUI();
@@ -36,6 +45,11 @@ public class GameManager : MonoBehaviour
     private void UpdateUI()
     {
         timeUI.text = ":" + (int)_gameTimer;
+    }
+
+    public void LevelCompleted()
+    {
+        Debug.Log("HAS GANADO");
     }
 
     private void GameOver()

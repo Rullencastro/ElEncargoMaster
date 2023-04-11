@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 
@@ -14,20 +16,34 @@ public class MazeGenerator : MonoBehaviour
 {
     public int width;
     public int height;
-    public List<GameObject> wallPrefab;
+    public List<GameObject> wallPrefab; 
+    public List<GameObject> wallCornerPrefab;
     public GameObject playerPrefab;
-    public GameObject endPrefab;  
+    public GameObject endPrefab;
+    
  
     private Cell[,] maze;
     private int startWidth = 0;
     private int startHeight = 0;
     private int endWidth = 0;
     private int endHeight = 0;
+    private List<GameObject> wallsCreated = new List<GameObject>();
+    private GameObject player;
+    private GameObject end;
 
     private void Start()
     {
         GenerateMaze();
         CreateMazeVisuals();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R)) {
+            DestroyMazeVisuals();
+            GenerateMaze();
+            CreateMazeVisuals();
+        }
     }
 
     private void GenerateMaze()
@@ -111,78 +127,7 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    private bool FindPath(int startX, int startY, int endX, int endY)
-    {
-        // Create a boolean 2D array to keep track of visited cells
-        bool[,] visited = new bool[width, height];
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (maze[x, y] == Cell.Wall)
-                {
-                    visited[x, y] = true;
-                }
-            }
-        }
-
-        // Create a queue to store the cells to be visited
-        Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        queue.Enqueue(new Vector2Int(startX, startY));
-        visited[startX, startY] = true;
-
-        // Create a dictionary to store the parent of each visited cell
-        Dictionary<Vector2Int, Vector2Int> parent = new Dictionary<Vector2Int, Vector2Int>();
-        parent.Add(new Vector2Int(startX, startY), new Vector2Int(-1, -1));
-
-        // Crea una lista con las direcciones posibles para avanzar
-        List<Vector2Int> directions = new List<Vector2Int>();
-        directions.Add(Vector2Int.up);
-        directions.Add(Vector2Int.right);
-        directions.Add(Vector2Int.down);
-        directions.Add(Vector2Int.left);
-
-        // BFS algorithm to find the path
-        while (queue.Count > 0)
-        {
-            // Dequeue the cell at the front of the queue
-            Vector2Int current = queue.Dequeue();
-
-            // If we have reached the end cell, we have found a path
-            if (current.x == endX && current.y == endY)
-            {
-                return true;
-            }
-
-            // Check the neighbors of the current cell
-            foreach (Vector2Int d in directions)
-            {
-                Vector2Int neighbour = new Vector2Int(current.x + d.x, current.y + d.y);
-
-                // Check if the neighbor is inside the maze and has not been visited
-                if (neighbour.x >= 0 && neighbour.x < width && neighbour.y >= 0 && neighbour.y < height && !visited[neighbour.x,neighbour.y])
-                {
-                    // Mark the neighbor as visited, add it to the queue, and set its parent
-                    visited[neighbour.x, neighbour.y] = true;
-                    queue.Enqueue(neighbour);
-                    parent.Add(neighbour, current);
-                }
-            }
-        }
-
-        // If we have not found a path, we need to remove some walls to connect the start and end cells
-        Vector2Int c = new Vector2Int(endX, endY);
-        while (parent.ContainsKey(c))
-        {
-            Vector2Int p = parent[c];
-            if (maze[p.x, p.y] == Cell.Wall)
-            {
-                maze[p.x, p.y] = Cell.Floor;
-            }
-            c = p;
-        }
-        return false;
-    }
+    
 
     // Funcion para mezclar una lista aleatoriamente
     private void ShuffleList<T>(List<T> list)
@@ -196,8 +141,11 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+   
+
     private void CreateMazeVisuals()
     {
+        wallsCreated = new List<GameObject>();
         // Crea los prefabs de la pared para cada celda del laberinto
         for (int x = 0; x < width; x++)
         {
@@ -207,20 +155,31 @@ public class MazeGenerator : MonoBehaviour
 
                 if (maze[x, y] == Cell.Wall)
                 {
-
                     int wallIndex = Random.Range(0, wallPrefab.Count);
-                    Instantiate(wallPrefab[wallIndex] , position, Quaternion.identity);
+                    wallsCreated.Add(Instantiate(wallPrefab[wallIndex], position, Quaternion.identity));
                 }
-                else if (maze[x, y] == Cell.Start)
+                
+                if (maze[x, y] == Cell.Start)
                 {
-                    Instantiate(playerPrefab, position, Quaternion.identity);
+                    player = Instantiate(playerPrefab, position, Quaternion.identity);
                 }
-                else if (maze[x, y] == Cell.End)
+
+                if (maze[x, y] == Cell.End)
                 {
-                    Instantiate(endPrefab, position, Quaternion.identity);
+                    end = Instantiate(endPrefab, position, Quaternion.identity);
                 }
             }
         }
+    }
+
+    private void DestroyMazeVisuals()
+    {
+        foreach (var w in wallsCreated)
+        {
+            Destroy(w);
+        }
+        Destroy(player);
+        Destroy(end);
     }
 }
 
