@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     private float _gameTimer = 30;
 
-    public TextMeshProUGUI timeUI;
-
-    public static GameManager Instance;
+    [SerializeField]
+    private float _gameTime;
 
     protected virtual void Awake()
     {
@@ -18,15 +19,14 @@ public class GameManager : MonoBehaviour
        
     private void Start()
     {
-        _gameTimer = 30;
-        UpdateUI();
+        _gameTimer = _gameTime;
+        MazeGenerator.Instance.GenerateMaze();
     }
 
     
     private void Update()
     {
         GameTime();
-        UpdateUI();
     }
 
     private void GameTime()
@@ -36,15 +36,10 @@ public class GameManager : MonoBehaviour
 
         if (_gameTimer < 0)
         {
-            _gameTimer = 30;
             GameOver();
         }
-        
-    }
 
-    private void UpdateUI()
-    {
-        timeUI.text = ":" + (int)_gameTimer;
+        UIManager.Instance.UpdateTimer(_gameTimer);
     }
 
     public void LevelCompleted()
@@ -52,8 +47,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("HAS GANADO");
     }
 
+    public void ResetGame()
+    {
+        _gameTimer = _gameTime;
+        MazeGenerator.Instance.ResetMaze();
+        UIManager.Instance.ResetUI();
+    }
+
     private void GameOver()
     {
-        Debug.Log("HAS PERDIDO");
+        Debug.Log("HAS GANADO");
+        UIManager.Instance.GameOver();
     }
 }

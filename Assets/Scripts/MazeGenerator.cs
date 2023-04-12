@@ -20,6 +20,7 @@ public class MazeGenerator : MonoBehaviour
     public List<GameObject> wallCornerPrefab;
     public GameObject playerPrefab;
     public GameObject endPrefab;
+    public static MazeGenerator Instance;
     
  
     private Cell[,] maze;
@@ -31,22 +32,19 @@ public class MazeGenerator : MonoBehaviour
     private GameObject player;
     private GameObject end;
 
-    private void Start()
+    protected virtual void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+    }
+
+    public void ResetMaze()
+    {
+        DestroyMazeVisuals();
         GenerateMaze();
-        CreateMazeVisuals();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.R)) {
-            DestroyMazeVisuals();
-            GenerateMaze();
-            CreateMazeVisuals();
-        }
-    }
-
-    private void GenerateMaze()
+    public void GenerateMaze()
     {
         // Crea una matriz para el laberinto
         maze = new Cell[width, height];
@@ -55,6 +53,7 @@ public class MazeGenerator : MonoBehaviour
         StartEndCells();
         RecursiveBackTracking(startWidth, startHeight);
         maze[startWidth, startHeight] = Cell.Start;
+        CreateMazeVisuals();
     }
 
     private void StartEndCells()
