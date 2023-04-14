@@ -5,14 +5,32 @@ using UnityEngine;
 public class WallInteraction : MonoBehaviour
 {
     public Light spotLight;
-    // Start is called before the first frame update
-    private void OnCollisionEnter(Collision collision)
+    public Material detectionMaterial;
+    public GameObject[] model;
+
+    private Material defaultMaterial;
+
+    private void Start()
     {
-        spotLight.enabled = true;
+        defaultMaterial = model[0].GetComponent<MeshRenderer>().material;
     }
 
-    private void OnCollisionExit(Collision collision)
+    public void WallDetected()
+    {
+        spotLight.enabled = true;
+
+        foreach (var m in model) 
+        {
+            m.GetComponent<MeshRenderer>().material = detectionMaterial;
+        }
+    }
+
+    public void WallNoDetected()
     {
         spotLight.enabled = false;
+        foreach(var m in model)
+        {
+            m.GetComponent<MeshRenderer>().material = defaultMaterial;
+        }
     }
 }

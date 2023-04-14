@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 948705330567978506}
   m_Layer: 0
   m_Name: FireTruckWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotLight: {fileID: 5337265221799019404}
+  detectionMaterial: {fileID: 2100000, guid: ec8bd26234a042f42a14445799415656, type: 2}
+  model:
+  - {fileID: 1052450886291951120}
 --- !u!1001 &1052450886292048048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228,6 +231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66756304be5ae4545bcbdef9ff1489b2, type: 3}
+--- !u!1 &1052450886291951120 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 66756304be5ae4545bcbdef9ff1489b2, type: 3}
+  m_PrefabInstance: {fileID: 1052450886292048048}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1052450886292181552 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 66756304be5ae4545bcbdef9ff1489b2, type: 3}

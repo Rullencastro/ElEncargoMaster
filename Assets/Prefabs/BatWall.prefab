@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 324359211464736055}
   m_Layer: 0
   m_Name: BatWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,6 +62,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotLight: {fileID: 472520072058575024}
+  detectionMaterial: {fileID: 2100000, guid: f61b4b5bb7fc5d7489b71a591d8b8ea1, type: 2}
+  model:
+  - {fileID: 4408491803557297390}
+  - {fileID: 1325470586804815868}
 --- !u!1 &7853234137445942532
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}
+--- !u!1 &1325470586804815868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}
+  m_PrefabInstance: {fileID: 1325470586804846940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1325470586804984796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}
@@ -307,6 +316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}
+--- !u!1 &4408491803557297390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}
+  m_PrefabInstance: {fileID: 4408491803557329486}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4408491803557716174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9f185e9167e4f99489912e1b6d9899bf, type: 3}

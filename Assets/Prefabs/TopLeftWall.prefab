@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2176866851016988148, guid: 3bd7faf426f4874439c2f0a8559ae5f6, type: 3}
       propertyPath: m_Name
-      value: DollArmWall
+      value: TopLeftWall
       objectReference: {fileID: 0}
     - target: {fileID: 2667610163306370635, guid: 3bd7faf426f4874439c2f0a8559ae5f6, type: 3}
       propertyPath: m_RootOrder

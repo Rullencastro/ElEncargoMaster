@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8122250036074821514}
   m_Layer: 0
   m_Name: HearseWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotLight: {fileID: 3112784290004096507}
+  detectionMaterial: {fileID: 2100000, guid: 85bbdb2a3b367d343adb8b3c2a4e7f22, type: 2}
+  model:
+  - {fileID: 3882633609765416760}
 --- !u!1001 &3882633609765382552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,5 +234,10 @@ PrefabInstance:
 --- !u!4 &3882633609764991768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 83c124e5c28d49149a336502dc0e1e2d, type: 3}
+  m_PrefabInstance: {fileID: 3882633609765382552}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3882633609765416760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 83c124e5c28d49149a336502dc0e1e2d, type: 3}
   m_PrefabInstance: {fileID: 3882633609765382552}
   m_PrefabAsset: {fileID: 0}

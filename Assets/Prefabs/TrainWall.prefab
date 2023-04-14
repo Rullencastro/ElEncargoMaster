@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 903341356268133274}
   m_Layer: 0
   m_Name: TrainWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,6 +61,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotLight: {fileID: 1649608232426947126}
+  detectionMaterial: {fileID: 2100000, guid: 96a3760829c6eb943b681cbff1de49d0, type: 2}
+  model:
+  - {fileID: 699510641066971416}
 --- !u!1 &7865765118585317753
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,5 +235,10 @@ PrefabInstance:
 --- !u!4 &699510641066544440 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ffdb71bb9ac69ca4487008cff817971f, type: 3}
+  m_PrefabInstance: {fileID: 699510641066940344}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &699510641066971416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: ffdb71bb9ac69ca4487008cff817971f, type: 3}
   m_PrefabInstance: {fileID: 699510641066940344}
   m_PrefabAsset: {fileID: 0}

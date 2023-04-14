@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 7268369194950645389}
   m_Layer: 0
   m_Name: RobotWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotLight: {fileID: 3283127314837156066}
+  detectionMaterial: {fileID: 2100000, guid: 22099abba87f8114db20ba19925b514c, type: 2}
+  model:
+  - {fileID: 543686085354850498}
 --- !u!1001 &543686085354950242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,5 +234,10 @@ PrefabInstance:
 --- !u!4 &543686085354558690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 37838039cb488d24ca9c078c2e1ef1b1, type: 3}
+  m_PrefabInstance: {fileID: 543686085354950242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &543686085354850498 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 37838039cb488d24ca9c078c2e1ef1b1, type: 3}
   m_PrefabInstance: {fileID: 543686085354950242}
   m_PrefabAsset: {fileID: 0}

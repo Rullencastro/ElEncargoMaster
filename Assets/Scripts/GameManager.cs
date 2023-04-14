@@ -5,21 +5,34 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+
+    private WrapperHighScores _highScores;
+    private string filePath;
     private float _gameTimer = 30;
+    private int wallsDestroyed;
 
     [SerializeField]
     private float _gameTime;
+
+    private bool _gamePaused;
 
     protected virtual void Awake()
     {
         if (Instance == null)
             Instance = this;
+
+        _highScores = new WrapperHighScores();
+        filePath = "highScores.json";
+        //arreglar lo de crear archivo si no existe
+        _highScores.LoadScores(filePath);
     }
 
        
     private void Start()
     {
         _gameTimer = _gameTime;
+        wallsDestroyed = 0;
+        UIManager.Instance.UpdateWallDestroyed(wallsDestroyed);
         MazeGenerator.Instance.GenerateMaze();
     }
 
@@ -31,10 +44,10 @@ public class GameManager : MonoBehaviour
 
     private void GameTime()
     {
-        if (_gameTimer > 0)
+        if (_gameTimer > 0 && !_gamePaused)
             _gameTimer -= Time.deltaTime;
 
-        if (_gameTimer < 0)
+        if (_gameTimer < 0 && !_gamePaused)
         {
             GameOver();
         }
@@ -44,19 +57,42 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        Debug.Log("HAS GANADO");
+        _highScores.AddScore(new ScoreData(wallsDestroyed,(int)_gameTimer));
+        _highScores.SaveScores(filePath);
+        //panel de ganar
+        //arreglar highscores
+    }
+
+    public void DestroyWall()
+    {
+        wallsDestroyed++;
+        UIManager.Instance.UpdateWallDestroyed(wallsDestroyed);
+    }
+
+    private void UnPause()
+    {
+        _gamePaused = false;
+    }
+
+
+    private void Pause()
+    {
+        _gamePaused = true;
     }
 
     public void ResetGame()
     {
         _gameTimer = _gameTime;
+        UnPause();
+        wallsDestroyed = 0;
         MazeGenerator.Instance.ResetMaze();
         UIManager.Instance.ResetUI();
     }
 
     private void GameOver()
     {
-        Debug.Log("HAS GANADO");
+        Pause();
+        UIManager.Instance.UpdateBestScoresUI(_highScores);
         UIManager.Instance.GameOver();
     }
 }

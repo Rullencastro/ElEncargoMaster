@@ -6,10 +6,20 @@ public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
     private Rigidbody _rb;
-    // Start is called before the first frame update
-    void Start()
+    private bool _isDetectingWall;
+    private GameObject _wallDetected;
+    private int _wallID;
+
+    private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _isDetectingWall = false;
+    }
+
+    private void Update()
+    {
+        WallToDeleteDetection();
+        DeleteWall();
     }
 
     // Update is called once per frame
@@ -17,17 +27,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
     }
-    
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Desactivar la propiedad isKinematic para permitir el movimiento debido a las colisiones
-        _rb.isKinematic = false;
-    }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        // Reactivar la propiedad isKinematic para evitar recibir fuerzas externas
-        _rb.isKinematic = true;
+        Gizmos.color = Color.green;
+        Ray r = new Ray(transform.position, transform.forward);
+        Gizmos.DrawRay(r);
     }
 
     private void Movement()
@@ -39,13 +44,73 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.MovePosition(transform.position += movimiento * (movementSpeed * Time.fixedDeltaTime));
         
+
         if (movimiento.magnitude > 0)
+        {
+            _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
             Rotate(movimiento);
+        }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        }
     }
 
     private void Rotate(Vector3 movement)
     {
         Quaternion rotacionObjetivo = Quaternion.LookRotation(movement, Vector3.up);
         _rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 360 * Time.fixedDeltaTime));
+    }
+
+    private void WallToDeleteDetection()
+    {
+        Vector3 origin = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+        if(Physics.Raycast(origin,transform.forward,out RaycastHit hit, 1))
+        {
+            if(hit.collider.CompareTag("Wall")) {
+                bool isDifferentWall = _wallDetected != null ? _wallDetected.GetInstanceID() != hit.collider.gameObject.GetInstanceID() : false;
+                if (!_isDetectingWall)
+                {
+                    _wallDetected = hit.collider.gameObject;
+                    _wallDetected.GetComponent<WallInteraction>().WallDetected();
+                    _wallID = _wallDetected.GetInstanceID();
+                    _isDetectingWall = true;
+                }
+                else if(_isDetectingWall && isDifferentWall)
+                {
+                    _wallDetected.GetComponent<WallInteraction>().WallNoDetected();
+                    _wallDetected = hit.collider.gameObject;
+                    _wallDetected.GetComponent<WallInteraction>().WallDetected();
+                    _wallID = _wallDetected.GetInstanceID();
+                }
+            }
+            else
+            {
+                if (_isDetectingWall)
+                {
+                    _wallDetected.GetComponent<WallInteraction>().WallNoDetected();
+                    _isDetectingWall = false;
+                }
+            }
+        }
+        else
+        {
+            if(_isDetectingWall) 
+            {
+                _wallDetected.GetComponent<WallInteraction>().WallNoDetected();
+                _isDetectingWall= false;
+            }
+        }
+    }
+
+    private void DeleteWall()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && _wallDetected != null)
+        {
+            Destroy(_wallDetected);
+            _wallDetected = null;
+            _isDetectingWall = false;
+            GameManager.Instance.DestroyWall();
+        }
     }
 }
