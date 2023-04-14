@@ -57,9 +57,11 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        _highScores.AddScore(new ScoreData(wallsDestroyed,(int)_gameTimer));
+        _highScores.AddScore(new ScoreData(wallsDestroyed,(int)(_gameTime - _gameTimer)));
         _highScores.SaveScores(filePath);
-        //panel de ganar
+        Pause();
+        UIManager.Instance.UpdateBestScoresUI(_highScores);
+        UIManager.Instance.LevelCompleted();
         //arreglar highscores
     }
 
@@ -78,6 +80,11 @@ public class GameManager : MonoBehaviour
     private void Pause()
     {
         _gamePaused = true;
+    }
+
+    public bool GameStatus()
+    {
+        return _gamePaused;
     }
 
     public void ResetGame()

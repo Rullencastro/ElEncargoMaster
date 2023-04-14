@@ -8,9 +8,12 @@ public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI wallDestroyedText;
-    public TextMeshProUGUI bestScoresText;
+    public TextMeshProUGUI bestScoresPosText;
+    public TextMeshProUGUI bestScoresWallsText;
+    public TextMeshProUGUI bestScoresTimeText;
 
     public Image gameOverPanel;
+    public Image levelCompletedPanel;
     public Image bestScoresPanel;
 
     public static UIManager Instance;
@@ -35,6 +38,7 @@ public class UIManager : MonoBehaviour
     {
         gameOverPanel.gameObject.SetActive(false);
         bestScoresPanel.gameObject.SetActive(false);
+        levelCompletedPanel.gameObject.SetActive(false);
         UpdateWallDestroyed(0);
     }
 
@@ -44,15 +48,27 @@ public class UIManager : MonoBehaviour
         bestScoresPanel.gameObject.SetActive(true);
     }
 
+    public void LevelCompleted()
+    {
+        levelCompletedPanel.gameObject.SetActive(true);
+        bestScoresPanel.gameObject.SetActive(true);
+    }
+
     public void UpdateBestScoresUI(WrapperHighScores _highScores)
     {
-        string bestScoreTxt = "<color=#FF8000>BEST SCORES</color><br>";
+        string posTxt = "";
+        string wallsTxt = "";
+        string timeTxt = "";
 
         for (int i = 0; i < _highScores.scores.Count; i++)
         {
-            bestScoreTxt += "<br><color=#000000>" + (i + 1) + ".-</color> <color=#A98307>" + _highScores.scores[i].wallsDestroyed + "</color>";
+            posTxt += "<color=#000000>" + (i + 1) + ".-</color><br>";
+            wallsTxt += "<color=#A98307>" + _highScores.scores[i].wallsDestroyed + "</color><br>";
+            timeTxt += " <color=#A98307>" + _highScores.scores[i].time + "</color><br>";
         }
 
-        bestScoresText.GetComponent<TextMeshProUGUI>().text = bestScoreTxt;
+        bestScoresPosText.GetComponent<TextMeshProUGUI>().text = posTxt;
+        bestScoresWallsText.GetComponent<TextMeshProUGUI>().text = wallsTxt;
+        bestScoresTimeText.GetComponent<TextMeshProUGUI>().text = timeTxt;
     }
 }

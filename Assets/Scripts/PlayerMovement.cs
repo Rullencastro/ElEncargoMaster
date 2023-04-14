@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject _wallDetected;
     private int _wallID;
 
+    private bool isGamePaused;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -18,14 +20,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        WallToDeleteDetection();
-        DeleteWall();
+        if (!IsGamePaused())
+        {
+            WallToDeleteDetection();
+            DeleteWall();
+        }
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        Movement();
+        if (!IsGamePaused())
+        {
+            Movement();
+        }
     }
 
     private void OnDrawGizmos()
@@ -102,6 +110,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public bool IsGamePaused()
+    {
+        return GameManager.Instance.GameStatus();
+    }
+
 
     private void DeleteWall()
     {

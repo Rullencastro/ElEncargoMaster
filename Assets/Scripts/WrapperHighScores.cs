@@ -30,7 +30,7 @@ public class WrapperHighScores
             if (x.wallsDestroyed != y.wallsDestroyed)
             {
                 // Ordenar por score de forma descendente
-                return y.wallsDestroyed.CompareTo(x.wallsDestroyed);
+                return x.wallsDestroyed.CompareTo(y.wallsDestroyed);
             }
             else
             {
