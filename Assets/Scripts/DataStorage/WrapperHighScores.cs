@@ -69,6 +69,7 @@ public class WrapperHighScores
         catch (Exception ex)
         {
             Debug.Log("Se ha producido un error: " + ex.Message);
+            SaveScores(filePath);
         }
     }
 }

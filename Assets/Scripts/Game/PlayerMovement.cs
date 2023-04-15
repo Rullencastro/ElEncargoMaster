@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Movement();
         }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        }
     }
 
     private void OnDrawGizmos()

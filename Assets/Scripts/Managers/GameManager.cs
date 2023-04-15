@@ -99,7 +99,6 @@ public class GameManager : MonoBehaviour
         UnPause();
         wallsDestroyed = 0;
         AudioManager.Instance.ClockSound(1, (int)_gameTime);
-
         MazeGenerator.Instance.ResetMaze();
         UIManager.Instance.ResetUI();
     }
