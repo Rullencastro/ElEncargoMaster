@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         wallsDestroyed = 0;
         UIManager.Instance.UpdateWallDestroyed(wallsDestroyed);
         MazeGenerator.Instance.GenerateMaze();
+        AudioManager.Instance.ClockSound(1, (int)_gameTime);
     }
 
     
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
         _highScores.SaveScores(filePath);
         Pause();
         TurnOnLights();
+        AudioManager.Instance.StopClockSound();
         AudioManager.Instance.PlaySFX("FinishReached");
         UIManager.Instance.UpdateBestScoresUI(_highScores);
         UIManager.Instance.LevelCompleted();
@@ -96,6 +98,8 @@ public class GameManager : MonoBehaviour
         TurnOffLights();
         UnPause();
         wallsDestroyed = 0;
+        AudioManager.Instance.ClockSound(1, (int)_gameTime);
+
         MazeGenerator.Instance.ResetMaze();
         UIManager.Instance.ResetUI();
     }
@@ -104,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         Pause();
         TurnOnLights();
+        AudioManager.Instance.StopClockSound();
         AudioManager.Instance.PlaySFX("GameOver");
         UIManager.Instance.UpdateBestScoresUI(_highScores);
         UIManager.Instance.GameOver();

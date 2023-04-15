@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public Image gameOverPanel;
     public Image levelCompletedPanel;
     public Image bestScoresPanel;
+    public Image instructionsPanel;
 
     public static UIManager Instance;
 
@@ -36,22 +37,32 @@ public class UIManager : MonoBehaviour
 
     public void ResetUI()
     {
-        gameOverPanel.gameObject.SetActive(false);
-        bestScoresPanel.gameObject.SetActive(false);
-        levelCompletedPanel.gameObject.SetActive(false);
+        gameOverPanel.gameObject.GetComponent<PanelAnimation>().DisablePanel();
+        bestScoresPanel.gameObject.GetComponent<PanelAnimation>().DisablePanel();
+        levelCompletedPanel.gameObject.GetComponent<PanelAnimation>().DisablePanel();
         UpdateWallDestroyed(0);
+    }
+
+    public void OpenInstructions()
+    {
+        instructionsPanel.gameObject.GetComponent<PanelAnimation>().ShowPanel();
+    }
+
+    public void CloseInstructions()
+    {
+        instructionsPanel.gameObject.GetComponent<PanelAnimation>().DisablePanel();
     }
 
     public void GameOver()
     {
-        gameOverPanel.gameObject.SetActive(true);
-        bestScoresPanel.gameObject.SetActive(true);
+        gameOverPanel.gameObject.GetComponent<PanelAnimation>().ShowPanel();
+        bestScoresPanel.gameObject.GetComponent<PanelAnimation>().ShowPanel();
     }
 
     public void LevelCompleted()
     {
-        levelCompletedPanel.gameObject.SetActive(true);
-        bestScoresPanel.gameObject.SetActive(true);
+        levelCompletedPanel.gameObject.GetComponent<PanelAnimation>().ShowPanel();
+        bestScoresPanel.gameObject.GetComponent<PanelAnimation>().ShowPanel();
     }
 
     public void UpdateBestScoresUI(WrapperHighScores _highScores)

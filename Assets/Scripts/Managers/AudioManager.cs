@@ -56,4 +56,29 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private IEnumerator PlaySoundEvery(string name, float t, int times)
+    {
+        Sound sound = Array.Find(sfxSounds, s => s.name == name);
+
+        for (int i = 0; i < times; i++)
+        {
+            PlaySFX(name);
+            yield return new WaitForSeconds(t);
+        }
+    }
+
+    public void ButtonClick()
+    {
+        PlaySFX("Click");
+    }
+
+    public void ClockSound(float t, int times)
+    {
+        StartCoroutine(PlaySoundEvery("Clock", t, times));
+    }
+
+    public void StopClockSound()
+    {
+        StopAllCoroutines();
+    }
 }
