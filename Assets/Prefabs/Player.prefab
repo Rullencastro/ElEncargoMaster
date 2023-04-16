@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
+  playerAnimation: {fileID: 6481507799422366129}
 --- !u!1001 &6481507799429711057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,8 +245,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: b77f122f451a2394898a24191c26107c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 19b1058b58d5e314bb115a937b9bcf48, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77f122f451a2394898a24191c26107c, type: 3}
+--- !u!95 &6481507799422366129 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: b77f122f451a2394898a24191c26107c, type: 3}
+  m_PrefabInstance: {fileID: 6481507799429711057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6481507799429324373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: b77f122f451a2394898a24191c26107c, type: 3}

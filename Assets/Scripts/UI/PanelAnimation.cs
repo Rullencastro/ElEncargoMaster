@@ -18,22 +18,6 @@ public class PanelAnimation : MonoBehaviour
         panelToAnimate.localScale = Vector3.zero;
     }
 
-    //private void OnEnable()
-    //{
-    //    canvasGroup.DOFade(1f, duration);
-    //    GetComponent<RectTransform>().DOScale(Vector3.one, duration).SetEase(Ease.OutBack);
-    //}
-
-    //public void DisablePanel()
-    //{
-    //    Sequence disableSequence = DOTween.Sequence();
-    //    disableSequence.Append(canvasGroup.DOFade(0f, duration));
-    //    disableSequence.Join(GetComponent<RectTransform>().DOScale(Vector3.zero, duration).SetEase(Ease.InBack));
-
-
-    //    disableSequence.Play().OnComplete(() => gameObject.SetActive(false));
-    //}
-
     private IEnumerator AnimatePanel(bool show)
     {
         if (show)

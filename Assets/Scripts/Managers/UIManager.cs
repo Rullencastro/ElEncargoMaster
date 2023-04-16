@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
         {
             posTxt += "<color=#000000>" + (i + 1) + ".-</color><br>";
             wallsTxt += "<color=#A98307>" + _highScores.scores[i].wallsDestroyed + "</color><br>";
-            timeTxt += " <color=#A98307>" + _highScores.scores[i].time + "</color><br>";
+            timeTxt += " <color=#A98307>" + _highScores.scores[i].time + " (s)</color><br>";
         }
 
         bestScoresPosText.GetComponent<TextMeshProUGUI>().text = posTxt;

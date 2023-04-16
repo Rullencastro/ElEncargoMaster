@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
+    public Animator playerAnimation;
+
+
     private Rigidbody _rb;
     private bool _isDetectingWall;
     private GameObject _wallDetected;
@@ -36,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            DeadbyGameOver();
             _rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         }
     }
@@ -59,11 +63,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (movimiento.magnitude > 0)
         {
+            playerAnimation.SetBool("IsWalking", true);
             _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
             Rotate(movimiento);
         }
         else
         {
+            playerAnimation.SetBool("IsWalking", false);
             _rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         }
     }
@@ -120,12 +126,17 @@ public class PlayerMovement : MonoBehaviour
         return GameManager.Instance.GameStatus();
     }
 
+    public void DeadbyGameOver()
+    {
+        playerAnimation.SetTrigger("Die");
+    }
+
 
     private void DeleteWall()
     {
         if (Input.GetKeyDown(KeyCode.E) && _wallDetected != null)
         {
-            Destroy(_wallDetected);
+            _wallDetected.GetComponent<WallInteraction>().BreakWall();
             _wallDetected = null;
             _isDetectingWall = false;
             GameManager.Instance.DestroyWall();

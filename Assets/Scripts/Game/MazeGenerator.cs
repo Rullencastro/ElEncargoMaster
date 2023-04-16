@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -175,6 +176,7 @@ public class MazeGenerator : MonoBehaviour
             Destroy(w);
         }
         Destroy(player);
+        end.transform.DOKill();
         Destroy(end);
     }
 }

@@ -5,11 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject lights;
+    public PlayerMovement player;
 
 
     private WrapperHighScores _highScores;
     private string filePath;
-    private float _gameTimer = 30;
+    private float _gameTimer = 25;
     private int wallsDestroyed;
 
     [SerializeField]
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour
 
         _highScores = new WrapperHighScores();
         filePath = "highScores.json";
-        //arreglar lo de crear archivo si no existe
         _highScores.LoadScores(filePath);
     }
 
@@ -36,12 +36,18 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateWallDestroyed(wallsDestroyed);
         MazeGenerator.Instance.GenerateMaze();
         AudioManager.Instance.ClockSound(1, (int)_gameTime);
+        TurnOffLights();
     }
 
     
     private void Update()
     {
         GameTime();
+    }
+
+    public int TotalGameTime()
+    {
+        return (int)_gameTime;
     }
 
     private void GameTime()
@@ -115,11 +121,11 @@ public class GameManager : MonoBehaviour
 
     private void TurnOnLights()
     {
-        lights.SetActive(true);
+        lights.GetComponent<LightsController>().ShowLights();
     }
 
     private void TurnOffLights()
     {
-        lights.SetActive(false);
+        lights.GetComponent<LightsController>().DisableLights();
     }
 }
